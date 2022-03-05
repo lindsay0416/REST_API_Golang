@@ -13,6 +13,8 @@ type Book struct {
 	Rating int    `json:"rating"`
 }
 
+// GetBooks func
+// Get all the books
 func GetBooks(c *fiber.Ctx) {
 	db := database.DBConn
 	var books []Book
@@ -20,6 +22,8 @@ func GetBooks(c *fiber.Ctx) {
 	c.JSON(books)
 }
 
+// GetBook func
+// Get the book by id
 func GetBook(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
@@ -28,6 +32,8 @@ func GetBook(c *fiber.Ctx) {
 	c.JSON(book)
 }
 
+// NewBook func
+// add a new book
 func NewBook(c *fiber.Ctx) {
 	db := database.DBConn
 	var book Book
@@ -38,6 +44,8 @@ func NewBook(c *fiber.Ctx) {
 	c.JSON(book)
 }
 
+// DeleteBook func
+// Delete book by ID
 func DeleteBook(c *fiber.Ctx) {
 	id := c.Params("id")
 	db := database.DBConn
@@ -45,9 +53,9 @@ func DeleteBook(c *fiber.Ctx) {
 	var book Book
 	db.First(&book, id)
 	if book.Title == "" {
-		c.Status(500).Send("No Book Found with ID")
+		c.Status(500).Send("No book found with ID")
 		return
 	}
 	db.Delete(&book)
-	c.Send("Book Successfully deleted")
+	c.Send("Book successfully deleted")
 }
